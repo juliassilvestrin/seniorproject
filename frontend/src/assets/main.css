@@ -1,0 +1,47 @@
+/* google fonts - inter for everything */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* utah tech red */
+  --utu-red: #BA1C21;
+  --utu-red-dark: #8B1519;
+  --utu-red-light: #E8363C;
+  
+  /* utah tech navy */
+  --navy: #003058;
+  --navy-light: #1A4870;
+  
+  /* light backgrounds */
+  --cream: #FAFAF8;
+  --warm-white: #FFFFFF;
+  
+  /* grays for borders and lighter text */
+  --gray-100: #F5F5F4;
+  --gray-200: #E7E5E4;
+  --gray-400: #A8A29E;
+  --gray-600: #57534E;
+  
+  /* gold accent */
+  --accent-gold: #D4A853;
+  
+  /* pre-made shadows */
+  --shadow-md: 0 4px 12px rgba(26, 31, 54, 0.08);
+  --shadow-lg: 0 12px 40px rgba(26, 31, 54, 0.12);
+  --shadow-xl: 0 24px 60px rgba(26, 31, 54, 0.16);
+}
+
+/* remove default spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* base styles for the whole site */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  line-height: 1.6;
+  overflow-x: hidden; /* stops horizontal scrolling */
+}
