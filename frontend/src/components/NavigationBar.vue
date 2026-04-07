@@ -1,23 +1,28 @@
 <template>
+  <!-- top navigation bar - sticks to top of page -->
   <nav class="navbar">
+    <!-- logo links back to home -->
     <router-link to="/" class="logo">
       <div class="logo-icon">TC</div>
       <span class="logo-text">Tutoring Center</span>
     </router-link>
-    
+
+    <!-- main nav links in the center -->
     <div class="nav-links">
       <router-link to="/" class="nav-link">Home</router-link>
       <router-link to="/schedule" class="nav-link">Schedule</router-link>
       <router-link to="/tutors" class="nav-link">Tutors</router-link>
       <router-link to="/courses" class="nav-link">Courses</router-link>
     </div>
-    
+
+    <!-- tutor login button on the right -->
     <router-link to="/login" class="nav-cta">Tutor Login</router-link>
   </nav>
 </template>
 
 <script>
 export default {
+  // simple nav component, no props or state needed
   name: 'NavigationBar'
 }
 </script>
@@ -64,7 +69,7 @@ export default {
 .logo-text {
   font-family: 'Inter', sans-serif;
   font-size: 22px;
-  font-weight: 600; 
+  font-weight: 600;
   color: var(--navy);
 }
 
@@ -118,7 +123,7 @@ export default {
   .navbar {
     padding: 0 24px;
   }
-  
+
   .nav-links {
     display: none;
   }

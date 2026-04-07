@@ -1,12 +1,16 @@
 <template>
+  <!-- site footer with branding, links, and copyright -->
   <footer class="footer">
     <div class="footer-content">
+      <!-- left side - branding and description -->
       <div class="footer-brand">
         <div class="logo-text">Tutoring Center</div>
         <p>Free walk-in tutoring for Utah Tech University Department of Computing students.</p>
       </div>
-      
+
+      <!-- right side - link columns -->
       <div class="footer-links">
+        <!-- quick links column -->
         <div class="footer-column">
           <h4>Quick Links</h4>
           <router-link to="/">Home</router-link>
@@ -14,14 +18,18 @@
           <router-link to="/tutors">Tutors</router-link>
           <router-link to="/courses">Courses</router-link>
         </div>
-        
+
+        <!-- tutor links column -->
+        <!-- todo: update these hrefs once dashboard routes are set up -->
         <div class="footer-column">
           <h4>For Tutors</h4>
           <router-link to="/login">Login</router-link>
           <a href="#">Dashboard</a>
           <a href="#">Manage Schedule</a>
         </div>
-        
+
+        <!-- contact info column -->
+        <!-- todo: add real links to department and university pages -->
         <div class="footer-column">
           <h4>Contact</h4>
           <a href="#">Department of Computing</a>
@@ -29,7 +37,8 @@
         </div>
       </div>
     </div>
-    
+
+    <!-- copyright bar at the bottom -->
     <div class="footer-bottom">
       © 2025 Utah Tech University Department of Computing. All rights reserved.
     </div>
@@ -38,6 +47,7 @@
 
 <script>
 export default {
+  // static footer component, no props needed
   name: 'Footer'
 }
 </script>
@@ -120,7 +130,7 @@ export default {
     flex-direction: column;
     gap: 40px;
   }
-  
+
   .footer-links {
     gap: 40px;
   }
@@ -130,7 +140,7 @@ export default {
   .footer {
     padding: 40px 24px;
   }
-  
+
   .footer-links {
     flex-direction: column;
     gap: 32px;
