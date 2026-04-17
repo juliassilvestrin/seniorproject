@@ -92,6 +92,27 @@
                       <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
                   </button>
+                  <!-- reset password button - opens inline form for this tutor -->
+                  <button class="icon-btn" title="Reset Password" @click="startReset(tutor.id)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                  </button>
+                </div>
+                <!-- inline password reset form - only shows for the tutor being reset -->
+                <div v-if="resetingId === tutor.id" class="reset-form">
+                  <input
+                    type="password"
+                    v-model="newPassword"
+                    placeholder="New password"
+                    class="reset-input"
+                  >
+                  <div class="reset-actions">
+                    <button class="reset-save-btn" @click="saveReset(tutor.id)" :disabled="!newPassword">Save</button>
+                    <button class="reset-cancel-btn" @click="cancelReset">Cancel</button>
+                  </div>
+                  <span v-if="resetMsg" class="reset-msg">{{ resetMsg }}</span>
                 </div>
               </td>
             </tr>
@@ -113,7 +134,10 @@ export default {
   data() {
     return {
       searchQuery: '',
-      tutors: []
+      tutors: [],
+      resetingId: null,   // which tutor's reset form is open
+      newPassword: '',
+      resetMsg: ''
     }
   },
 
@@ -158,6 +182,32 @@ export default {
         tutor.isActive = updated.isActive
       } catch (err) {
         console.error('failed to toggle tutor:', err)
+      }
+    },
+
+    // open the reset form for a specific tutor
+    startReset(id) {
+      this.resetingId = id
+      this.newPassword = ''
+      this.resetMsg = ''
+    },
+
+    cancelReset() {
+      this.resetingId = null
+      this.newPassword = ''
+      this.resetMsg = ''
+    },
+
+    // submit the new password to the api
+    async saveReset(id) {
+      if (!this.newPassword) return
+      try {
+        await adminService.resetTutorPassword(id, this.newPassword)
+        this.resetMsg = 'password updated'
+        setTimeout(() => this.cancelReset(), 1500)
+      } catch (err) {
+        this.resetMsg = 'failed to update password'
+        console.error('failed to reset password:', err)
       }
     }
   }
@@ -263,6 +313,29 @@ export default {
   cursor: pointer; color: var(--gray-600); transition: all 0.2s ease;
 }
 .icon-btn:hover { border-color: var(--gray-400); color: var(--navy); }
+
+.reset-form {
+  margin-top: 8px; display: flex; flex-direction: column; gap: 6px;
+}
+.reset-input {
+  padding: 6px 10px; border: 1px solid var(--gray-200);
+  border-radius: 8px; font-size: 13px; font-family: 'Inter', sans-serif;
+  color: var(--navy); background: var(--warm-white); width: 100%;
+}
+.reset-input:focus { outline: none; border-color: var(--utu-red); }
+.reset-actions { display: flex; gap: 6px; }
+.reset-save-btn {
+  padding: 5px 12px; background: var(--utu-red); color: white;
+  border: none; border-radius: 6px; font-size: 13px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+}
+.reset-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.reset-cancel-btn {
+  padding: 5px 12px; background: var(--gray-100); color: var(--gray-600);
+  border: none; border-radius: 6px; font-size: 13px; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+}
+.reset-msg { font-size: 12px; color: var(--gray-600); }
 
 @media (max-width: 900px) {
   .section-header { flex-direction: column; gap: 16px; }

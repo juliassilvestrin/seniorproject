@@ -17,15 +17,8 @@
           <p>Connect with experienced tutors at Utah Tech University's Department of Computing. Walk-in help available in Smith Building — look for the red vests.</p>
 
           <div class="hero-buttons">
-            <router-link to="/schedule" class="btn-primary">
-              View Schedule
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </router-link>
-            <router-link to="/tutors" class="btn-secondary">
-              Meet Our Tutors
-            </router-link>
+            <router-link to="/schedule" class="btn-primary">View Schedule</router-link>
+            <router-link to="/tutors" class="btn-secondary">Meet Our Tutors</router-link>
           </div>
         </div>
 
@@ -382,44 +375,42 @@ export default {
   gap: 16px;
 }
 
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--utu-red);
-  color: white;
-  padding: 16px 32px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(186, 28, 33, 0.3);
-}
-
-.btn-primary:hover {
-  background: var(--utu-red-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(186, 28, 33, 0.4);
-}
-
+.btn-primary,
 .btn-secondary {
   display: inline-flex;
   align-items: center;
-  background: var(--warm-white);
-  color: var(--navy);
+  justify-content: center;
   padding: 16px 32px;
   border-radius: 12px;
   text-decoration: none;
   font-weight: 600;
   font-size: 16px;
   transition: all 0.2s ease;
-  border: 1px solid var(--gray-200);
+  min-width: 160px;
+}
+
+.btn-primary {
+  background: var(--utu-red);
+  color: white;
+  border: 2px solid var(--utu-red);
+}
+
+.btn-primary:hover {
+  background: var(--utu-red-dark);
+  border-color: var(--utu-red-dark);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--navy);
+  border: 2px solid var(--navy);
 }
 
 .btn-secondary:hover {
-  background: var(--gray-100);
-  border-color: var(--gray-400);
+  background: var(--navy);
+  color: white;
+  transform: translateY(-2px);
 }
 
 .hero-card {

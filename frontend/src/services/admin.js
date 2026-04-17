@@ -15,6 +15,10 @@ export const adminService = {
     const res = await api.patch(`/admin/tutors/${id}/role`, { role })
     return res.data
   },
+  async resetTutorPassword(id, password) {
+    const res = await api.patch(`/admin/tutors/${id}/password`, { password })
+    return res.data
+  },
 
   // course management
   async getAllCourses() {

@@ -62,6 +62,30 @@ router.patch('/tutors/:id/active', async (req, res, next) => {
   }
 })
 
+// PATCH /api/admin/tutors/:id/password
+// admin resets a tutor's password manually
+router.patch('/tutors/:id/password', async (req, res, next) => {
+  try {
+    const { password } = req.body
+    if (!password || password.length < 6) {
+      return res.status(400).json({ message: 'password must be at least 6 characters' })
+    }
+
+    // i have to fetch with +password because the field is select:false in the model
+    const tutor = await User.findById(req.params.id).select('+password')
+    if (!tutor) {
+      return res.status(404).json({ message: 'tutor not found' })
+    }
+
+    tutor.password = password
+    await tutor.save()  // pre-save hook handles the bcrypt hashing
+
+    res.json({ message: 'password updated' })
+  } catch (err) {
+    next(err)
+  }
+})
+
 // PATCH /api/admin/tutors/:id/role
 // change a tutor's role (e.g. promote to admin or senior tutor)
 router.patch('/tutors/:id/role', async (req, res, next) => {

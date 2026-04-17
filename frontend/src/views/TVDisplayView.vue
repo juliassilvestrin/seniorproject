@@ -52,10 +52,13 @@
                 <div class="slot-time">{{ tutor.time }}</div>
                 <div class="slot-courses">
                   <span
-                    v-for="course in tutor.courses"
+                    v-for="course in tutor.courses.slice(0, 4)"
                     :key="course"
                     class="slot-course"
                   >{{ course }}</span>
+                  <span v-if="tutor.courses.length > 4" class="slot-course-more">
+                    +{{ tutor.courses.length - 4 }} more
+                  </span>
                 </div>
               </div>
 
@@ -499,6 +502,14 @@ export default {
   border-radius: 6px;
   font-size: 13px;
   font-weight: 600;
+}
+
+.slot-course-more {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.5;
 }
 
 .no-tutors {

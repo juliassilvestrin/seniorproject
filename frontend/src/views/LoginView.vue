@@ -77,8 +77,18 @@
               <input type="checkbox" v-model="rememberMe">
               <span>Remember me</span>
             </label>
-            <!-- todo: hook up forgot password flow -->
-            <a href="#" class="forgot-link">Forgot password?</a>
+            <!-- clicking this shows a message to contact the admin instead of a reset flow -->
+            <a href="#" class="forgot-link" @click.prevent="showForgotMsg = !showForgotMsg">Forgot password?</a>
+          </div>
+
+          <!-- contact admin message - shows when forgot password is clicked -->
+          <div v-if="showForgotMsg" class="forgot-msg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>Contact your admin to reset your password — email <a href="mailto:tutoring@utahtech.edu">tutoring@utahtech.edu</a></span>
           </div>
 
           <!-- submit button - disabled while loading -->
@@ -158,9 +168,10 @@ export default {
       email: '',
       password: '',
       showPassword: false,       // toggles password visibility
-      rememberMe: false,         // todo: persist login state with this
+      rememberMe: false,
       isLoading: false,          // shows spinner on the button
       errorMessage: '',          // general error shown in the banner
+      showForgotMsg: false,      // shows the contact admin message
       errors: {                  // per-field validation errors
         email: '',
         password: ''
@@ -364,6 +375,22 @@ export default {
 .forgot-link:hover {
   text-decoration: underline;
 }
+
+.forgot-msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(186, 28, 33, 0.07);
+  border: 1px solid rgba(186, 28, 33, 0.15);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--gray-600);
+  margin-top: -8px;
+}
+.forgot-msg svg { flex-shrink: 0; color: var(--utu-red); margin-top: 1px; }
+.forgot-msg a { color: var(--utu-red); font-weight: 600; text-decoration: none; }
+.forgot-msg a:hover { text-decoration: underline; }
 
 .login-btn {
   width: 100%;
