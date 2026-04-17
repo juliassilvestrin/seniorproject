@@ -125,17 +125,11 @@
       <div class="on-duty-inner">
 
         <div class="on-duty-header">
-          <div>
-            <p class="section-label gold">available today</p>
-            <h2 class="section-title white">Tutors on duty right now</h2>
-          </div>
-          <router-link to="/schedule" class="view-all-link">
-            View full schedule →
-          </router-link>
+          <p class="section-label gold">available today</p>
+          <h2 class="section-title white">Tutors on duty right now</h2>
         </div>
 
         <!-- loop through tutors that are on duty today -->
-        <!-- todo: fetch from api based on current day/time -->
         <div class="tutor-grid">
           <TutorCard
             v-for="tutor in tutorsOnDuty"
@@ -147,6 +141,10 @@
             :courses="tutor.courses"
             variant="dark"
           />
+        </div>
+
+        <div class="on-duty-footer">
+          <router-link to="/schedule" class="view-all-link">View full schedule →</router-link>
         </div>
 
       </div>
@@ -596,10 +594,12 @@ export default {
 }
 
 .on-duty-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
   margin-bottom: 48px;
+}
+
+.on-duty-footer {
+  margin-top: 40px;
+  text-align: center;
 }
 
 .view-all-link {
@@ -751,9 +751,7 @@ export default {
   }
 
   .on-duty-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    margin-bottom: 32px;
   }
 
   .tutor-grid {
