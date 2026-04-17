@@ -6,7 +6,12 @@ const errorHandler = require('./middleware/errorHandler')
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:5173' }))
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://project-vsljl.vercel.app'
+  ]
+}))
 app.use(express.json())
 
 // mount route groups
