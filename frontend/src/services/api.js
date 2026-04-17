@@ -1,8 +1,9 @@
 // central axios instance - all api calls go through here
 import axios from 'axios'
 
+// in production VITE_API_URL points to the railway backend, locally it proxies through vite
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api',
   headers: { 'Content-Type': 'application/json' }
 })
 

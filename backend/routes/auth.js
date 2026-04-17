@@ -9,7 +9,7 @@ const auth = require('../middleware/auth')
 
 const router = express.Router()
 
-// helper to create a jwt token
+// I pack the user id and role into the token so I don't have to hit the database on every request
 const createToken = (user) => {
   return jwt.sign(
     { id: user._id, role: user.role },
@@ -19,7 +19,7 @@ const createToken = (user) => {
 }
 
 // POST /api/auth/verify-code
-// step 1 of registration - checks if an invite code is valid before showing the form
+// checks the invite code before showing the registration form
 router.post('/verify-code', async (req, res) => {
   const { code } = req.body
 
@@ -35,12 +35,13 @@ router.post('/verify-code', async (req, res) => {
 })
 
 // POST /api/auth/register
-// creates a new tutor account using an invite code
+// you can only register with an invite code - the role is set by the code, not the user
 router.post('/register', async (req, res, next) => {
   try {
     const { inviteCode, firstName, lastName, email, password } = req.body
 
-    // find the invite code and make sure it's valid
+    // I check the code again here even though verify-code already checked it
+    // someone could skip that step and POST directly to this endpoint
     const code = await InviteCode.findOne({
       code: inviteCode,
       status: 'active'
@@ -50,18 +51,15 @@ router.post('/register', async (req, res, next) => {
       return res.status(400).json({ message: 'invalid or expired invite code' })
     }
 
-    // check if code is expired
     if (new Date() > code.expiresAt) {
       return res.status(400).json({ message: 'invite code has expired' })
     }
 
-    // check if email is already taken
     const existingUser = await User.findOne({ email })
     if (existingUser) {
       return res.status(400).json({ message: 'email already registered' })
     }
 
-    // create the user with the role from the invite code
     const name = `${firstName} ${lastName}`
     const user = await User.create({
       name,
@@ -70,13 +68,12 @@ router.post('/register', async (req, res, next) => {
       role: code.role
     })
 
-    // mark the invite code as used
+    // mark the code as used so nobody can register with it again
     code.status = 'used'
     code.usedBy = user._id
     code.usedAt = new Date()
     await code.save()
 
-    // send back jwt
     const token = createToken(user)
     res.status(201).json({
       token,
@@ -93,7 +90,6 @@ router.post('/register', async (req, res, next) => {
 })
 
 // POST /api/auth/login
-// logs in with email and password, returns jwt
 router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body
@@ -102,19 +98,18 @@ router.post('/login', async (req, res, next) => {
       return res.status(400).json({ message: 'email and password are required' })
     }
 
-    // find user and include password field (normally excluded)
+    // password is excluded from queries by default so I have to explicitly ask for it
     const user = await User.findOne({ email }).select('+password')
     if (!user) {
       return res.status(401).json({ message: 'invalid email or password' })
     }
 
-    // check password
     const isMatch = await user.comparePassword(password)
     if (!isMatch) {
+      // same message for wrong email or wrong password - don't reveal which one failed
       return res.status(401).json({ message: 'invalid email or password' })
     }
 
-    // send back jwt
     const token = createToken(user)
     res.json({
       token,
@@ -131,7 +126,7 @@ router.post('/login', async (req, res, next) => {
 })
 
 // GET /api/auth/me
-// returns the currently logged-in user's info
+// the auth middleware runs first and attaches req.user so I know who's asking
 router.get('/me', auth, async (req, res) => {
   res.json({
     id: req.user._id,

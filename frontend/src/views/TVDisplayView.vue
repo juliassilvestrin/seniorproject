@@ -182,21 +182,20 @@ export default {
 
   data() {
     return {
-      currentTime: '',    // formatted time string, updated every second
-      timeInterval: null, // reference to the clock interval so we can clear it
-      weekDays: [],       // built from api data
-      qrCodeUrl: ''       // base64 data url for the qr code image
+      currentTime: '',    // updates every second
+      timeInterval: null, // I save this so I can cancel it when the page unmounts
+      weekDays: [],       // schedule grouped by day
+      qrCodeUrl: ''       // base64 image string from the qrcode library
     }
   },
 
   computed: {
-    // count how many tutors are scheduled for today
     tutorsAvailableNow() {
       const today = this.weekDays.find(d => d.isToday)
       return today ? today.tutors.length : 0
     },
 
-    // week date range string like "April 7 - 11, 2026"
+    // builds "April 7 - 11, 2026" for the schedule header
     weekDateRange() {
       if (this.weekDays.length === 0) return ''
       const months = ['January','February','March','April','May','June','July','August','September','October','November','December']
@@ -217,13 +216,12 @@ export default {
     await this.generateQrCode()
   },
 
-  // clean up the interval when leaving the page to avoid memory leaks
+  // clear the interval when leaving the page or it keeps running in the background
   beforeUnmount() {
     if (this.timeInterval) clearInterval(this.timeInterval)
   },
 
   methods: {
-    // format current time as "3:45 PM" style
     updateTime() {
       const now = new Date()
       this.currentTime = now.toLocaleTimeString('en-US', {
@@ -233,7 +231,7 @@ export default {
       })
     },
 
-    // generate qr code pointing to the tutoring center website
+    // toDataURL gives back a base64 string so I don't need to save any files
     async generateQrCode() {
       try {
         this.qrCodeUrl = await QRCode.toDataURL('https://tutoring.cs.utahtech.edu', {
@@ -246,12 +244,11 @@ export default {
       }
     },
 
-    // fetch schedule from api and group slots by day
+    // fetches all slots from the api and groups them into 5 day columns
     async loadSchedule() {
       try {
         const slots = await scheduleService.getAll()
 
-        // figure out monday of the current week for date numbers
         const today = new Date()
         const dayOfWeek = today.getDay()
         const monday = new Date(today)
@@ -266,11 +263,10 @@ export default {
             dayDate.getMonth() === today.getMonth() &&
             dayDate.getFullYear() === today.getFullYear()
 
-          // get slots for this day and shorten tutor names for the tv display
           const dayTutors = slots
             .filter(s => s.dayIndex === i)
             .map(s => ({
-              // shorten to "Jane D." style for tv display
+              // shorten "Jane Smith" to "Jane S." to fit on the tv screen
               name: s.tutor.split(' ').map((w, idx) => idx === 0 ? w : w[0] + '.').join(' '),
               initials: s.initials,
               time: s.time,
