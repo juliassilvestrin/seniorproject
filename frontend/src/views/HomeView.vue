@@ -152,7 +152,7 @@
           <router-link to="/schedule" class="no-tutors-cta">See upcoming schedule →</router-link>
         </div>
 
-        <div class="on-duty-footer">
+        <div v-if="tutorsOnDuty.length > 0" class="on-duty-footer">
           <router-link to="/schedule" class="view-all-link">View full schedule →</router-link>
         </div>
 
