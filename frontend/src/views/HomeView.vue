@@ -143,7 +143,13 @@
           />
         </div>
         <div v-else class="no-tutors-today">
-          <p>No tutors scheduled today — check the full schedule for the week.</p>
+          <div class="no-tutors-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <p class="no-tutors-label">No tutors on duty today</p>
+          <router-link to="/schedule" class="no-tutors-cta">See upcoming schedule →</router-link>
         </div>
 
         <div class="on-duty-footer">
@@ -624,11 +630,38 @@ export default {
 }
 
 .no-tutors-today {
-  text-align: center;
-  padding: 48px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 64px 0;
+}
+
+.no-tutors-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.no-tutors-label {
   font-size: 18px;
-  opacity: 0.5;
-  color: white;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.no-tutors-cta {
+  color: var(--accent-gold);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.no-tutors-cta:hover {
+  text-decoration: underline;
 }
 
 /* location */
