@@ -84,7 +84,6 @@
         <div class="qr-instruction">
           <h3>Get Full Details</h3>
           <p>Scan to see tutor profiles, course specializations, and real-time availability</p>
-          <div class="qr-url">tutoring.cs.utahtech.edu</div>
         </div>
 
         <div class="info-cards">
