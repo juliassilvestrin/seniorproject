@@ -282,6 +282,7 @@ export default {
   padding: 4px 10px; border-radius: 6px;
   font-size: 13px; font-weight: 600;
   background: var(--gray-100); color: var(--gray-600);
+  white-space: nowrap;
 }
 .role-badge.senior { background: rgba(212, 168, 83, 0.15); color: #B8860B; }
 
