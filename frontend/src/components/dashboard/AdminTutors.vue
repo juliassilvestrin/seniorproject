@@ -26,7 +26,7 @@
             <circle cx="11" cy="11" r="8"/>
             <path d="M21 21l-4.35-4.35"/>
           </svg>
-          <input type="text" v-model="searchQuery" placeholder="Search tutors...">
+          <input type="text" v-model="searchQuery" placeholder="Search tutors..." autocomplete="off">
         </div>
       </div>
       <div class="card-body no-padding">
@@ -107,6 +107,7 @@
                     v-model="newPassword"
                     placeholder="New password"
                     class="reset-input"
+                    autocomplete="new-password"
                   >
                   <div class="reset-actions">
                     <button class="reset-save-btn" @click="saveReset(tutor.id)" :disabled="!newPassword">Save</button>
