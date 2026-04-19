@@ -130,7 +130,7 @@
         </div>
 
         <!-- loop through tutors that are on duty today -->
-        <div class="tutor-grid">
+        <div v-if="tutorsOnDuty.length > 0" class="tutor-grid">
           <TutorCard
             v-for="tutor in tutorsOnDuty"
             :key="tutor.name"
@@ -141,6 +141,9 @@
             :courses="tutor.courses"
             variant="dark"
           />
+        </div>
+        <div v-else class="no-tutors-today">
+          <p>No tutors scheduled today — check the full schedule for the week.</p>
         </div>
 
         <div class="on-duty-footer">
@@ -618,6 +621,14 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+}
+
+.no-tutors-today {
+  text-align: center;
+  padding: 48px 0;
+  font-size: 18px;
+  opacity: 0.5;
+  color: white;
 }
 
 /* location */
