@@ -236,7 +236,7 @@ export default {
     // toDataURL gives back a base64 string so I don't need to save any files
     async generateQrCode() {
       try {
-        this.qrCodeUrl = await QRCode.toDataURL('https://tutoring.cs.utahtech.edu', {
+        this.qrCodeUrl = await QRCode.toDataURL('https://utututoring.vercel.app', {
           width: 200,
           margin: 1,
           color: { dark: '#1A1F36', light: '#FFFFFF' }
