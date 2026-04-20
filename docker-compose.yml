@@ -1,0 +1,35 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    ports:
+      - "5001:5001"
+    environment:
+      PORT: 5001
+      MONGODB_URI: mongodb://mongo:27017/tutoring
+      JWT_SECRET: utu-tutoring-dev-secret-change-in-production
+      JWT_EXPIRES_IN: 7d
+      CLOUDINARY_CLOUD_NAME: die9nd19m
+      CLOUDINARY_API_KEY: 953726212979834
+      CLOUDINARY_API_SECRET: evnm8kC20MApR6YXlgFNU3HnaH0
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:5001
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
