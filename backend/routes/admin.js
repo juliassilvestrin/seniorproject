@@ -203,6 +203,12 @@ router.get('/invite-codes', async (req, res, next) => {
   }
 })
 
+// ============================================================
+// VIDEO PRESENTATION - SECTION 1 (then show this)
+// FILE: backend/routes/admin.js
+// show how admins generate codes with a uniqueness check and 30-day expiration
+// ============================================================
+
 // POST /api/admin/invite-codes
 // generate a new invite code
 router.post('/invite-codes', async (req, res, next) => {
