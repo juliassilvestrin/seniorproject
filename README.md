@@ -47,15 +47,18 @@ docker compose exec backend node seed.js
 You need Node.js and MongoDB installed.
 
 **Backend:**
+
 ```bash
 cd backend
-cp .env.example .env   # fill in your values
 npm install
 npm run seed
 npm run dev
 ```
 
+Create a `.env` file in the `backend/` folder first — see the Environment Variables section below.
+
 **Frontend:**
+
 ```bash
 cd frontend
 npm install
@@ -83,12 +86,12 @@ CLOUDINARY_API_SECRET=your-api-secret
 
 After running the seed:
 
-| Email | Password | Role |
-|-------|----------|------|
-| jarod@utahtech.edu | tutoring123 | Admin |
-| austin@utahtech.edu | tutoring123 | Senior Tutor |
-| drew@utahtech.edu | tutoring123 | Tutor |
-| theisen@utahtech.edu | tutoring123 | Tutor |
+| Email                | Password    | Role         |
+| -------------------- | ----------- | ------------ |
+| jarod@utahtech.edu   | tutoring123 | Admin        |
+| austin@utahtech.edu  | tutoring123 | Senior Tutor |
+| drew@utahtech.edu    | tutoring123 | Tutor        |
+| theisen@utahtech.edu | tutoring123 | Tutor        |
 
 ---
 
