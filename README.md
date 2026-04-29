@@ -6,6 +6,10 @@ A web app for Utah Tech University's Department of Computing tutoring center. St
 
 ---
 
+## Screenshot
+
+![Home page](docs/images/home.png)
+
 ## What it does
 
 - Public schedule showing all tutors and their weekly hours
